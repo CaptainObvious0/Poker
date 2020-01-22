@@ -6,10 +6,6 @@ import java.util.List;
 
 public class PokerPlayer {
     
-    // TODO: Create some methods with parameters so that there's no as much repeated code
-    // Hopefully clean up the earlier methods made
-    // Duplicates can occur when the player deck is made
-    
     // Constructor fields
     String player;
     ArrayList<String> cards;
@@ -101,7 +97,7 @@ public class PokerPlayer {
              if (card.contains(currentCard)) {
                  i--;
              } else {
-                 card.add(playableCards.get(random.nextInt(51) + 1));
+                 card.add(currentCard);
              }
          }
          return card;
@@ -168,17 +164,7 @@ public class PokerPlayer {
      
      public boolean checkFourOfKind() {
          ArrayList<String> cards = getDeck();
-         int[] checkCards = new int[5];
-         // Creates an int array of all the card values
-         for (int i = 0; i < cards.size(); i++) {
-             String val;
-             if (cards.get(i).length() == 2) {
-                 val = cards.get(i).substring(1,2);
-             } else {
-                 val = cards.get(i).substring(1,3);
-             }
-             checkCards[i] = Integer.parseInt(val);
-         }
+         int[] checkCards = intArray(cards);
          
          // Counts the amount of same card values
          int count = 0;
@@ -197,17 +183,8 @@ public class PokerPlayer {
      
      public boolean checkFullHouse() {
          ArrayList<String> cards = getDeck();
-         int[] checkCards = new int[5];
-         // Creates an int array of the card values
-         for (int i = 0; i < cards.size(); i++) {
-             String val;
-             if (cards.get(i).length() == 2) {
-                 val = cards.get(i).substring(1,2);
-             } else {
-                 val = cards.get(i).substring(1,3);
-             }
-             checkCards[i] = Integer.parseInt(val);
-         }
+         int[] checkCards = intArray(cards);
+         
          // Sort the array so that it can be easier to check
          Arrays.sort(checkCards);
          int prevVal = checkCards[0] - 1;
@@ -303,17 +280,8 @@ public class PokerPlayer {
      
      public boolean checkThreeOfKind() {
          ArrayList<String> cards = getDeck();
-         int[] checkCards = new int[5];
-         // Creates an int array with all the card values
-         for (int i = 0; i < cards.size(); i++) {
-             String val;
-             if (cards.get(i).length() == 2) {
-                 val = cards.get(i).substring(1,2);
-             } else {
-                 val = cards.get(i).substring(1,3);
-             }
-             checkCards[i] = Integer.parseInt(val);
-         }
+         int[] checkCards = intArray(cards);
+         
          // Sorts the array and then checks for three of the same cards
          Arrays.sort(checkCards);
          int prevVal = checkCards[0];
@@ -337,17 +305,7 @@ public class PokerPlayer {
      
      public boolean checkTwoPair() {
          ArrayList<String> cards = getDeck();
-         int[] checkCards = new int[5];
-         // Creates an int array of all the card values
-         for (int i = 0; i < cards.size(); i++) {
-             String val;
-             if (cards.get(i).length() == 2) {
-                 val = cards.get(i).substring(1,2);
-             } else {
-                 val = cards.get(i).substring(1,3);
-             }
-             checkCards[i] = Integer.parseInt(val);
-         }
+         int[] checkCards = intArray(cards);
          
          // Checks if there's two different pairs (of the same value) of cards
          int count = 0;
@@ -374,18 +332,7 @@ public class PokerPlayer {
      
      public boolean checkPair() {
          ArrayList<String> cards = getDeck();
-         int[] checkCards = new int[5];
-         // Creates an int array of all the card values
-         for (int i = 0; i < cards.size(); i++) {
-             String val;
-             if (cards.get(i).length() == 2) {
-                 val = cards.get(i).substring(1,2);
-             } else {
-                 val = cards.get(i).substring(1,3);
-             }
-             checkCards[i] = Integer.parseInt(val);
-         }
-         
+         int[] checkCards = intArray(cards);
          // Checks for one pair within the int array
          int count = 0;
          for (int val : checkCards) {
@@ -419,5 +366,20 @@ public class PokerPlayer {
              }
          }
          return highValue;
+     }
+     
+     public int[] intArray(ArrayList<String> cards) {
+         int[] checkCards = new int[5];
+         // Creates an int array with all the card values
+         for (int i = 0; i < cards.size(); i++) {
+             String val;
+             if (cards.get(i).length() == 2) {
+                 val = cards.get(i).substring(1,2);
+             } else {
+                 val = cards.get(i).substring(1,3);
+             }
+             checkCards[i] = Integer.parseInt(val);
+         }
+         return checkCards;
      }
 }
